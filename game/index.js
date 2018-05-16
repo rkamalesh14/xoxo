@@ -1,6 +1,25 @@
-import {Map} from 'immutable'
+import { Map } from 'immutable'
+let board = Map()
 
-export default function reducer(state, action) {
+// const board = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
+
+export const move = (player, arr) => {
+
+  return {
+    type: "MOVE",
+    position: arr,
+    player
+  }
+}
+
+export default function reducer(state = { turn: 'X', board }, action) {
   // TODO
-  return state
+  switch (action.type) {
+    case "MOVE":
+      const board = state.board.setIn(action.position, action.player)
+      const turn = state.turn === 'X' ? 'O' : 'X'
+      return { turn, board }
+    default:
+      return state
+  }
 }
